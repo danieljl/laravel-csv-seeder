@@ -86,6 +86,13 @@ class CsvSeeder extends Seeder
 		{
 			while ( ($row = fgetcsv($handle, 0, $deliminator)) !== FALSE )
 			{
+				if ( is_null($row[0]) ) continue;
+
+				$row = array_map(function ($x) {
+					if ( $x === '' ) return null;
+					else return $x;
+				}, $row);
+
 				if ( !$header )
 				{
 					$header = $row;
